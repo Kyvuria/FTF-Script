@@ -31,18 +31,6 @@ local function updatePower()
     local cp = ReplicatedStorage:FindFirstChild("CurrentPower")
     if cp and cp.Value ~= "" then
         currentPower = cp.Value
-        return
-    else
-        currentPower = "Waiting..."
-    end
-    for _, p in ipairs(Players:GetPlayers()) do
-        if getIsBeast(p) and p.Character then
-            local bp = p.Character:FindFirstChild("BeastPowers")
-            if bp then
-                local name = bp:FindFirstChildWhichIsA("StringValue")
-                if name then currentPower = name.Value return end
-            end
-        end
     end
 end
 
@@ -50,7 +38,7 @@ local cp = ReplicatedStorage:FindFirstChild("CurrentPower")
 if cp then
     if cp.Value ~= "" then currentPower = cp.Value end
     cp.Changed:Connect(function(val)
-        if val ~= "" then currentPower = val else currentPower = "Waiting..." end
+        currentPower = (val ~= "" and val) or "Waiting..."
     end)
 end
 
